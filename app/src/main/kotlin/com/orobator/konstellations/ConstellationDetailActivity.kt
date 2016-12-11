@@ -1,23 +1,15 @@
 package com.orobator.konstellations
 
-import android.R.id.home
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
-import android.os.Build.VERSION_CODES.N_MR1
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.orobator.konstellations.R.id.disable_shortcut
-import com.orobator.konstellations.R.id.enable_shortcut
-import com.orobator.konstellations.R.string.shortcut_disabled
-import com.orobator.konstellations.R.string.shortcut_enabled
 
 class ConstellationDetailActivity : AppCompatActivity() {
   @BindView(R.id.constellation_description) lateinit var description: TextView
@@ -52,10 +44,6 @@ class ConstellationDetailActivity : AppCompatActivity() {
       else -> Constellation.fromString(intent.getConstellation())
     }
 
-    shortcutAction {
-      trackShortcutUsed(it, constellation)
-    }
-
     title = constellation.longName
     description.text = constellation.description
     constellationImage.setImageResource(constellation.image)
@@ -63,22 +51,6 @@ class ConstellationDetailActivity : AppCompatActivity() {
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.detail_menu, menu)
-    return true
-  }
-
-  @TargetApi(N_MR1)
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      enable_shortcut -> shortcutAction {
-        it.enableShortcuts(listOf(constellation.name))
-        alertUser(shortcut_enabled)
-      }
-      disable_shortcut -> shortcutAction {
-        it.disableShortcuts(listOf(constellation.name))
-        alertUser(shortcut_disabled)
-      }
-      home -> finish()
-    }
     return true
   }
 

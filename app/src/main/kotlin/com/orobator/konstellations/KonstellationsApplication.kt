@@ -14,7 +14,5 @@ class KonstellationsApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     APP_CONTEXT = this
-
-    shortcutAction(::updateShortcuts)
   }
 }
